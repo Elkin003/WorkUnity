@@ -22,3 +22,13 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Archivos de la configuración de IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Directorios de compilación/salida de Maven y otros
+target/
+out/
