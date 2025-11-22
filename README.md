@@ -1,2 +1,2 @@
 # WorkUnity
-Un MVP para gestionar proyectos en la UNL
+Un PMV para gestionar proyectos en la UNL
