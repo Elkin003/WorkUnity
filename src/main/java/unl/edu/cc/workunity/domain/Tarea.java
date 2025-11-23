@@ -1,6 +1,8 @@
 package unl.edu.cc.workunity.domain;
 
 import unl.edu.cc.workunity.domain.enums.EstadoTarea;
+import unl.edu.cc.workunity.exceptions.InvalidFile;
+import unl.edu.cc.workunity.exceptions.UnauthorizedAccessException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -43,17 +45,19 @@ public class Tarea {
         }
     }
 
-    public void agregar(ArchivoAdjunto archivo) {
-        this.archivo = archivo;
-    }
-
-    public void cambiarArchivo(ArchivoAdjunto archivo) {
+    public void agregar(ArchivoAdjunto archivo, Integrante integrante) {
+        if (!this.integranteAsignado.equals(integrante)) {
+            throw new UnauthorizedAccessException("Solo el integrante asignado puede adjuntar o cambiar archivos en esta tarea.");
+        }
+        if (archivo == null) {
+            throw new InvalidFile("No hay ningún archivo adjunto.");
+        }
         this.archivo = archivo;
     }
 
     public void entregar() {
         if (this.archivo == null) {
-            throw new IllegalStateException("No se puede entregar, sin un archivo adjunto");
+            throw new InvalidFile("No se puede entregar, sin un archivo adjunto");
         }
         setEntregada(true);
     }
