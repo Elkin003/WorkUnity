@@ -1,5 +1,151 @@
 package unl.edu.cc.workunity.domain;
 
+import unl.edu.cc.workunity.domain.enums.EstadoTarea;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ *
+ * @author Elkin Jiménez
+ */
 public class Tarea {
 
+    private String titulo;
+    private String descripcion;
+    private boolean entregada;
+    private EstadoTarea estado;
+    private LocalDate fechaAsignacion;
+    private LocalDate fechaLimite;
+
+    //Relaciones
+    private Integrante integranteAsignado;
+    private Proyecto proyecto;
+    private List<Comentario> comentarios;
+    private ArchivoAdjunto archivo;
+
+    public Tarea(String titulo, String descripcion, LocalDate fechaLimite, Proyecto proyecto) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.entregada = false;
+        this.estado = EstadoTarea.EN_CURSO;
+        this.fechaAsignacion = LocalDate.now();
+        this.fechaLimite = fechaLimite;
+        this.proyecto = proyecto;
+    }
+
+    public void agregar(Comentario comentario) {
+        getComentarios();
+        if (!comentarios.contains(comentario)) {
+            comentarios.add(comentario);
+            comentario.setTarea(this);
+        }
+    }
+
+    public void agregar(ArchivoAdjunto archivo) {
+        this.archivo = archivo;
+    }
+
+    public void cambiarArchivo(ArchivoAdjunto archivo) {
+        this.archivo = archivo;
+    }
+
+    public void entregar() {
+        if (this.archivo == null) {
+            throw new IllegalStateException("No se puede entregar, sin un archivo adjunto");
+        }
+        setEntregada(true);
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public boolean isEntregada() {
+        return entregada;
+    }
+
+    public void setEntregada(boolean entregada) {
+        this.entregada = entregada;
+        if (entregada) {
+            setEstado(EstadoTarea.COMPLETADA);
+        } else {
+            setEstado(EstadoTarea.EN_CURSO);
+            if (fechaLimite.isBefore(java.time.LocalDate.now())) {
+                setEstado(EstadoTarea.ATRASADA);
+            }
+        }
+    }
+
+    public EstadoTarea getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoTarea estado) {
+        this.estado = estado;
+    }
+
+    public LocalDate getFechaAsignacion() {
+        return fechaAsignacion;
+    }
+
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
+    }
+
+    public Integrante getIntegranteAsignado() {
+        return integranteAsignado;
+    }
+
+    public void setIntegranteAsignado(Integrante integranteAsignado) {
+        this.integranteAsignado = integranteAsignado;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public List<Comentario> getComentarios() {
+        if (comentarios == null) {
+            comentarios = new java.util.ArrayList<>();
+        }
+        return comentarios;
+    }
+
+    public ArchivoAdjunto getArchivo() {
+        return archivo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Tarea tarea = (Tarea) o;
+        return Objects.equals(titulo, tarea.titulo) && Objects.equals(fechaLimite, tarea.fechaLimite) && Objects.equals(proyecto, tarea.proyecto);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo, fechaLimite, proyecto);
+    }
+
+    @Override
+    public String toString() {
+        return "Tarea{" +
+                "titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", entregada=" + entregada +
+                ", estado=" + estado +
+                ", fechaAsignacion=" + fechaAsignacion +
+                ", fechaLimite=" + fechaLimite +
+                ", integranteAsignado=" + integranteAsignado +
+                ", proyecto=" + proyecto +
+                ", comentarios=" + comentarios +
+                ", archivo=" + archivo +
+                '}';
+    }
 }
