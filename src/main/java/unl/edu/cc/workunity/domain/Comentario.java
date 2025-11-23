@@ -39,12 +39,12 @@ public class Comentario {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Comentario that = (Comentario) o;
-        return Objects.equals(texto, that.texto) && Objects.equals(autor, that.autor) && Objects.equals(tarea, that.tarea);
+        return Objects.equals(texto, that.texto) && Objects.equals(autor, that.autor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(texto, autor, tarea);
+        return Objects.hash(texto, autor);
     }
 
     @Override
