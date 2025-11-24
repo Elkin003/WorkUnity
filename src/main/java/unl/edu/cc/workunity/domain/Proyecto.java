@@ -1,5 +1,7 @@
 package unl.edu.cc.workunity.domain;
 
+import unl.edu.cc.workunity.domain.enums.Rol;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +10,10 @@ import java.util.Objects;
 /**
  * @author Cristian Guaman
  */
-
 public class Proyecto {
 
     private String nombre;
-    private String dscripcion;
+    private String descripcion;
     private LocalDate fechaCreacion;
     private LocalDate fechaLimite;
     //Relaciones
@@ -20,22 +21,12 @@ public class Proyecto {
     private List<Integrante> miembro;
     private List<Tarea> tarea;
 
-    public Proyecto(String nombre, String descripcion, LocalDate fechaLimite) {
+    public Proyecto(String nombre, String descripcion, LocalDate fechaLimite, Usuario creador) {
         this.nombre = nombre;
-        this.dscripcion = descripcion;
-        fechaCreacion = LocalDate.now();
-        this.fechaLimite = fechaLimite;
-    }
-
-    public Proyecto(String nombre, String dscripcion, LocalDate fechaCreacion, LocalDate fechaLimite, Usuario creador,
-                    Integrante administrador, List<Integrante> miembro, List<Tarea> tarea) {
-        this.nombre = nombre;
-        this.dscripcion = dscripcion;
-        this.fechaCreacion = fechaCreacion;
+        this.descripcion = descripcion;
+        this.fechaCreacion = LocalDate.now();
         this.fechaLimite = fechaLimite;
         this.creador = creador;
-        this.miembro = new ArrayList<>();
-        this.tarea = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -46,12 +37,12 @@ public class Proyecto {
         this.nombre = nombre;
     }
 
-    public String getDscripcion() {
-        return dscripcion;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDscripcion(String dscripcion) {
-        this.dscripcion = dscripcion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public LocalDate getFechaCreacion() {
@@ -104,25 +95,19 @@ public class Proyecto {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Proyecto proyecto = (Proyecto) o;
-        return Objects.equals(nombre, proyecto.nombre) && Objects.equals(dscripcion, proyecto.dscripcion)
-                && Objects.equals(fechaCreacion, proyecto.fechaCreacion)
-                && Objects.equals(fechaLimite, proyecto.fechaLimite)
-                && Objects.equals(creador, proyecto.creador)
-                //& Objects.equals(administrador, proyecto.administrador)&
-                && Objects.equals(miembro, proyecto.miembro)
-                && Objects.equals(tarea, proyecto.tarea);
+        return Objects.equals(nombre, proyecto.nombre) && Objects.equals(descripcion, proyecto.descripcion) && Objects.equals(creador, proyecto.creador);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, dscripcion, fechaCreacion, fechaLimite, creador, miembro, tarea);
+        return Objects.hash(nombre, descripcion, creador);
     }
 
     @Override
     public String toString() {
         return "Proyecto{" +
                 "nombre='" + nombre + '\'' +
-                ", dscripcion='" + dscripcion + '\'' +
+                ", dscripcion='" + descripcion + '\'' +
                 ", fechaCreacion=" + fechaCreacion +
                 ", fechaLimite=" + fechaLimite +
                 ", creador=" + creador +

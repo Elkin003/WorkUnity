@@ -1,4 +1,6 @@
 package unl.edu.cc.workunity.domain;
+import unl.edu.cc.workunity.domain.enums.Rol;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +9,6 @@ import java.util.Objects;
 /**
  * @author Cristian Guaman
  */
-
 public class Usuario {
     private String nombre;
     private String email;
@@ -43,11 +44,11 @@ public class Usuario {
     }
 
     public void crearProyecto(String nombre, String descripcion, LocalDate fechaLimite) {
-        Proyecto proyecto = new Proyecto(nombre, descripcion, fechaLimite);
-        getProyectos();
-        if(!proyectos.contains(proyecto)) {
-            proyectos.add(proyecto);
-        }
+        Proyecto proyecto = new Proyecto(nombre, descripcion, fechaLimite, this);
+        this.agregarProyecto(proyecto);
+        Integrante integrante = new Integrante(Rol.LIDER, this, proyecto);
+        this.getIntegrantes().add(integrante);
+        proyecto.getMiembros().add(integrante);
     }
 
     public String getNombre() {
@@ -86,6 +87,9 @@ public class Usuario {
     }
 
     public List<Integrante> getIntegrantes() {
+        if (integrantes == null) {
+            integrantes = new ArrayList<>();
+        }
         return integrantes;
     }
 
@@ -97,16 +101,12 @@ public class Usuario {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(nombre, usuario.nombre)
-                && Objects.equals(email, usuario.email)
-                && Objects.equals(contrasenia, usuario.contrasenia)
-                && Objects.equals(proyectos, usuario.proyectos)
-                && Objects.equals(integrantes, usuario.integrantes);
+        return Objects.equals(nombre, usuario.nombre) && Objects.equals(email, usuario.email) && Objects.equals(contrasenia, usuario.contrasenia);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, email, contrasenia, proyectos, integrantes);
+        return Objects.hash(nombre, email, contrasenia);
     }
 
     @Override
