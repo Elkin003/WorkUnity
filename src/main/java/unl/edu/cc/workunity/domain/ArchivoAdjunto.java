@@ -1,30 +1,35 @@
 package unl.edu.cc.workunity.domain;
 
+import unl.edu.cc.workunity.exceptions.InvalidFile;
+
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.StringJoiner;
-import unl.edu.cc.workunity.domain.enums.TipoArchivo;
 
-public class ArchivoAdjunto {
-  private float tamanio;
-  private byte[] contenido;
-  private TipoArchivo tipoArchivo;
+public abstract class ArchivoAdjunto {
+    protected float tamanio;
+    protected byte[] contenido;
 
-    public ArchivoAdjunto() {
-    }
+    // Tamaño máximo permitido para el archivo 20 MB convertidos a bytes
+    private static final int TamanioMaximoBytes = 20 * 1024 * 1024;
 
-    public ArchivoAdjunto(float tamanio, byte[] contenido, TipoArchivo tipoArchivo) {
-        this.tamanio = tamanio;
+    public ArchivoAdjunto(byte[] contenido) {
+        validarTamanio(contenido);
         this.contenido = contenido;
-        this.tipoArchivo = tipoArchivo;
+        this.tamanio = contenido.length;
     }
+
+    public void validarTamanio(byte[] contenido) {
+        if (contenido == null || contenido.length == 0) {
+            throw new InvalidFile("El archivo no puede estar vacío.");
+        }
+        if (contenido.length > TamanioMaximoBytes) {
+            throw new InvalidFile("El archivo supera los 20MB permitidos");
+        }
+    }
+
 
     public float getTamanio() {
         return tamanio;
-    }
-
-    public void setTamanio(float tamanio) {
-        this.tamanio = tamanio;
     }
 
     public byte[] getContenido() {
@@ -32,24 +37,16 @@ public class ArchivoAdjunto {
     }
 
     public void setContenido(byte[] contenido) {
+        validarTamanio(contenido);
         this.contenido = contenido;
-    }
-
-    public TipoArchivo getTipoArchivo() {
-        return tipoArchivo;
-    }
-
-    public void setTipoArchivo(TipoArchivo tipoArchivo) {
-        this.tipoArchivo = tipoArchivo;
+        this.tamanio = contenido.length;
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", ArchivoAdjunto.class.getSimpleName() + "[", "]")
                 .add("tamanio=" + tamanio)
-                .add("contenido=" + Arrays.toString(contenido))
-                .add("tipoArchivo=" + tipoArchivo)
+                .add("contenido=" + contenido.length + " bytes")
                 .toString();
     }
-
 }
