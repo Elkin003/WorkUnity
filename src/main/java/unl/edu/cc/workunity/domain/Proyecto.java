@@ -20,8 +20,8 @@ public class Proyecto {
     private List<Tarea> tareas;
 
     public Proyecto(String nombre, String descripcion, LocalDate fechaLimite, Usuario creador) {
-        if(fechaLimite.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("La fecha limite no puede ser anterior a la fecha de hoy");
+        if (fechaLimite.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("La fecha límite no puede ser anterior a la fecha de hoy.");
         }
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -112,8 +112,8 @@ public class Proyecto {
                 ", fechaCreacion=" + fechaCreacion +
                 ", fechaLimite=" + fechaLimite +
                 ", creador=" + creador.getNombre() +
-                ", miembros=" + getMiembros() +
-                ", tarea=" + getTareas() +
+                ", miembros=" + getMiembros().size() +
+                ", tareas=" + getTareas().size() +
                 '}';
     }
 }
