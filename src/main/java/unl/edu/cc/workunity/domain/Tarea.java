@@ -146,9 +146,9 @@ public class Tarea {
                 ", estado=" + estado +
                 ", fechaAsignacion=" + fechaAsignacion +
                 ", fechaLimite=" + fechaLimite +
-                ", integranteAsignado=" + integranteAsignado +
-                ", proyecto=" + proyecto +
-                ", comentarios=" + comentarios +
+                ", integranteAsignado=" + integranteAsignado.getUsuario().getNombre() +
+                ", proyecto=" + proyecto.getNombre() +
+                ", comentarios=" + getComentarios().size() +
                 ", archivo=" + archivo +
                 '}';
     }

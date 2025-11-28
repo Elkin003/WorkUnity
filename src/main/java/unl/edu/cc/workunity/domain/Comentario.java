@@ -51,8 +51,8 @@ public class Comentario {
     public String toString() {
         return "Comentario{" +
                 "texto='" + texto + '\'' +
-                ", autor=" + autor +
-                ", tarea=" + tarea +
+                ", autor=" + autor.getUsuario().getNombre() +
+                ", tarea=" + tarea.getTitulo() +
                 '}';
     }
 }
