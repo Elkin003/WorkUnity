@@ -1,7 +1,9 @@
 package unl.edu.cc.workunity.view;
 
 import unl.edu.cc.workunity.domain.Usuario;
+import unl.edu.cc.workunity.exceptions.UnauthorizedAccessException;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -42,6 +44,8 @@ public class FuncionalidadCrearProyecto {
                         System.out.println("Proyecto creado exitosamente.");
                     } catch (IllegalArgumentException iae) {
                         System.out.println(iae.getMessage());
+                    }catch (DateTimeException dte) {
+                        System.out.println("Ingrese bien la fecha...");
                     } catch (InputMismatchException ime) {
                         System.out.println("Ingrese los datos que se pide.");
                     }
