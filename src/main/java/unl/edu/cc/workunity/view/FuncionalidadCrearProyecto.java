@@ -1,4 +1,4 @@
-package unl.edu.cc;
+package unl.edu.cc.workunity.view;
 
 import unl.edu.cc.workunity.domain.Usuario;
 
