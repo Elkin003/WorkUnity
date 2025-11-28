@@ -1,35 +1,35 @@
 package unl.edu.cc.workunity.domain;
 
+import unl.edu.cc.workunity.exceptions.InvalidFile;
+
 import java.util.Arrays;
 import java.util.StringJoiner;
 
 public abstract class ArchivoAdjunto {
-  protected float tamanio;
-  protected byte[] contenido;
+    protected float tamanio;
+    protected byte[] contenido;
 
     // Tamaño máximo permitido para el archivo 20 MB convertidos a bytes
     private static final int TamanioMaximoBytes = 20 * 1024 * 1024;
 
     public ArchivoAdjunto(byte[] contenido) {
-        this.tamanio = tamanio;
+        validarTamanio(contenido);
         this.contenido = contenido;
-       validarTamanio();
+        this.tamanio = contenido.length;
     }
 
-    public void validarTamanio() {
+    public void validarTamanio(byte[] contenido) {
+        if (contenido == null || contenido.length == 0) {
+            throw new InvalidFile("El archivo no puede estar vacío.");
+        }
         if (contenido.length > TamanioMaximoBytes) {
-            throw new IllegalArgumentException("El archivo supera los 20MB permitidos");
+            throw new InvalidFile("El archivo supera los 20MB permitidos");
         }
     }
 
 
-
     public float getTamanio() {
         return tamanio;
-    }
-
-    public void setTamanio(float tamanio) {
-        this.tamanio = tamanio;
     }
 
     public byte[] getContenido() {
@@ -37,14 +37,16 @@ public abstract class ArchivoAdjunto {
     }
 
     public void setContenido(byte[] contenido) {
+        validarTamanio(contenido);
         this.contenido = contenido;
+        this.tamanio = contenido.length;
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", ArchivoAdjunto.class.getSimpleName() + "[", "]")
                 .add("tamanio=" + tamanio)
-                .add("contenido=" + Arrays.toString(contenido))
+                .add("contenido=" + contenido.length + " bytes")
                 .toString();
     }
 }
