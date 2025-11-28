@@ -27,7 +27,7 @@ public class Integrante {
 
     private void validarLider() {
         if (rol != Rol.LIDER) {
-            throw new UnauthorizedAccessException("Permiso Denegado, solo el líder puede realizar esta acción.");
+            throw new UnauthorizedAccessException("No tiene permiso para modificar ");
         }
     }
 
