@@ -1,7 +1,5 @@
 package unl.edu.cc.workunity.domain;
 
-import unl.edu.cc.workunity.domain.enums.Rol;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +16,13 @@ public class Proyecto {
     private LocalDate fechaLimite;
     //Relaciones
     private Usuario creador;
-    private List<Integrante> miembro;
-    private List<Tarea> tarea;
+    private List<Integrante> miembros;
+    private List<Tarea> tareas;
 
     public Proyecto(String nombre, String descripcion, LocalDate fechaLimite, Usuario creador) {
+        if(fechaLimite.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("La fecha limite no puede ser anterior a la fecha de hoy");
+        }
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaCreacion = LocalDate.now();
@@ -70,25 +71,25 @@ public class Proyecto {
     }
 
     public List<Integrante> getMiembros() {
-        if (miembro == null) {
-            miembro = new ArrayList<>();
+        if (miembros == null) {
+            miembros = new ArrayList<>();
         }
-        return miembro;
+        return miembros;
     }
 
     public void setMiembros(List<Integrante> miembros) {
-        this.miembro = miembros;
+        this.miembros = miembros;
     }
 
     public List<Tarea> getTareas() {
-        if (tarea == null) {
-            tarea = new ArrayList<>();
+        if (tareas == null) {
+            tareas = new ArrayList<>();
         }
-        return tarea;
+        return tareas;
     }
 
     public void setTareas(List<Tarea> tareas) {
-        this.tarea = tareas;
+        this.tareas = tareas;
     }
 
     @Override
@@ -105,14 +106,14 @@ public class Proyecto {
 
     @Override
     public String toString() {
-        return "Proyecto{" +
+        return "\nProyecto{" +
                 "nombre='" + nombre + '\'' +
-                ", dscripcion='" + descripcion + '\'' +
+                ", descripcion='" + descripcion + '\'' +
                 ", fechaCreacion=" + fechaCreacion +
                 ", fechaLimite=" + fechaLimite +
-                ", creador=" + creador +
-                ", miembro=" + miembro +
-                ", tarea=" + tarea +
+                ", creador=" + creador.getNombre() +
+                ", miembros=" + getMiembros() +
+                ", tarea=" + getTareas() +
                 '}';
     }
 }

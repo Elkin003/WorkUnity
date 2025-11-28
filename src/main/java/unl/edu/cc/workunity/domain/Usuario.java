@@ -101,7 +101,9 @@ public class Usuario {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(nombre, usuario.nombre) && Objects.equals(email, usuario.email) && Objects.equals(contrasenia, usuario.contrasenia);
+        return Objects.equals(nombre, usuario.nombre)
+                && Objects.equals(email, usuario.email)
+                && Objects.equals(contrasenia, usuario.contrasenia);
     }
 
     @Override
