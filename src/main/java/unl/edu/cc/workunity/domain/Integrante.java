@@ -15,19 +15,19 @@ import java.util.Objects;
 public class Integrante {
 
     private Rol rol;
-    private Usuario usuario;
+    private Entidad entidad;
     private Proyecto proyecto;
     private List<Tarea> tareas;
 
-    public Integrante(Rol rol, Usuario usuario, Proyecto proyecto) {
+    public Integrante(Rol rol, Entidad entidad, Proyecto proyecto) {
         this.rol = rol;
-        this.usuario = usuario;
+        this.entidad = entidad;
         this.proyecto = proyecto;
     }
 
     private void validarLider() {
         if (rol != Rol.LIDER) {
-            throw new UnauthorizedAccessException("No tiene permiso para modificar ");
+            throw new UnauthorizedAccessException("No tiene permiso para modificar");
         }
     }
 
@@ -38,12 +38,12 @@ public class Integrante {
         proyecto.setFechaLimite(nuevaFechaLimite);
     }
 
-    public void agregarIntegrante(Usuario usuario) {
+    public void agregarIntegrante(Entidad entidad) {
         validarLider();
-        Integrante integranteNuevo = new Integrante(Rol.MIEMBRO, usuario, proyecto);
+        Integrante integranteNuevo = new Integrante(Rol.MIEMBRO, entidad, proyecto);
         if (!proyecto.getMiembros().contains(integranteNuevo)) {
             proyecto.getMiembros().add(integranteNuevo); // Agrega un integrante al proyecto
-            usuario.getIntegrantes().add(integranteNuevo);
+            entidad.getIntegrantes().add(integranteNuevo);
         } else {
             throw new ExistingIntegrantException("El integrante ya pertenece al proyecto.");
         }
@@ -75,12 +75,12 @@ public class Integrante {
         this.proyecto = proyecto;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Entidad getEntidad() {
+        return entidad;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setEntidad(Entidad entidad) {
+        this.entidad = entidad;
     }
 
     public List<Tarea> getTareas() {
@@ -98,19 +98,19 @@ public class Integrante {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Integrante that = (Integrante) o;
-        return rol == that.rol && Objects.equals(usuario, that.usuario) && Objects.equals(proyecto, that.proyecto);
+        return rol == that.rol && Objects.equals(entidad, that.entidad) && Objects.equals(proyecto, that.proyecto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rol, usuario, proyecto);
+        return Objects.hash(rol, entidad, proyecto);
     }
 
     @Override
     public String toString() {
         return "Integrante{" +
                 "rol=" + rol +
-                ", usuario=" + usuario.getNombre() +
+                ", entidad=" + entidad.getNombre() +
                 ", proyecto=" + proyecto.getNombre() +
                 ", tareas=" + getTareas().size() +
                 '}';

@@ -1,7 +1,6 @@
 package unl.edu.cc.workunity.view;
 
-import unl.edu.cc.workunity.domain.Usuario;
-import unl.edu.cc.workunity.exceptions.UnauthorizedAccessException;
+import unl.edu.cc.workunity.domain.Entidad;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -11,8 +10,8 @@ import java.util.Scanner;
 public class FuncionalidadCrearProyecto {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Usuario usuario = new Usuario("Elkin", "elkin.jimenez@unl.edu.ec", "elkin123");
-        System.out.println("\n-----Bienvenido " + usuario.getNombre() + " a WorkUnity-----");
+        Entidad entidad = new Entidad("Elkin", "Jiménez", "0991534536");
+        System.out.println("\n-----Bienvenido " + entidad.getNombre() + " a WorkUnity-----");
         int opcion = 0;
         while (opcion != 3) {
             try {
@@ -40,12 +39,12 @@ public class FuncionalidadCrearProyecto {
                         System.out.print("Año: ");
                         int anio = sc.nextInt();
                         LocalDate fechaLimiteProyecto = LocalDate.of(anio, mes, dia);
-                        usuario.crearProyecto(nombreProyecto, descripcionProyecto, fechaLimiteProyecto);
+                        entidad.crearProyecto(nombreProyecto, descripcionProyecto, fechaLimiteProyecto);
                         System.out.println("Proyecto creado exitosamente.");
                     } catch (IllegalArgumentException iae) {
                         System.out.println(iae.getMessage());
                     }catch (DateTimeException dte) {
-                        System.out.println("Ingrese bien la fecha...");
+                        System.out.println("Ingrese bien la fecha.");
                     } catch (InputMismatchException ime) {
                         System.out.println("Ingrese los datos que se pide.");
                     }
@@ -53,7 +52,7 @@ public class FuncionalidadCrearProyecto {
 
                 case 2:
                     System.out.println("\n---------Lista de Proyectos----------");
-                    System.out.println(usuario.listarProyectos());
+                    System.out.println(entidad.listarProyectos());
                     break;
             }
         }

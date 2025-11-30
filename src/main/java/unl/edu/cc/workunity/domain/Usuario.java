@@ -13,42 +13,13 @@ public class Usuario {
     private String nombre;
     private String email;
     private String contrasenia;
-    private List<Proyecto> proyectos;
-    private List<Integrante> integrantes;
+
+    private Entidad entidad;
 
     public Usuario(String nombre, String email, String contrasenia) {
         this.nombre = nombre;
         this.email = email;
         this.contrasenia = contrasenia;
-    }
-
-    public List<Proyecto> listarProyectos() {
-        if(proyectos==null){
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(proyectos);
-    }
-
-    public List<Integrante> listarIntegrantes() {
-        if(integrantes==null){
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(integrantes);
-    }
-
-    public void agregarProyecto(Proyecto proyecto) {
-        getProyectos();
-        if(!this.proyectos.contains(proyecto)){
-            proyectos.add(proyecto);
-        }
-    }
-
-    public void crearProyecto(String nombre, String descripcion, LocalDate fechaLimite) {
-        Proyecto proyecto = new Proyecto(nombre, descripcion, fechaLimite, this);
-        this.agregarProyecto(proyecto);
-        Integrante integrante = new Integrante(Rol.LIDER, this, proyecto);
-        this.getIntegrantes().add(integrante);
-        proyecto.getMiembros().add(integrante);
     }
 
     public String getNombre() {
@@ -75,35 +46,13 @@ public class Usuario {
         this.contrasenia = contrasenia;
     }
 
-    public List<Proyecto> getProyectos() {
-        if (proyectos == null) {
-            proyectos = new ArrayList<>();
-        }
-        return proyectos;
-    }
-
-    public void setProyectos(List<Proyecto> proyectos) {
-        this.proyectos = proyectos;
-    }
-
-    public List<Integrante> getIntegrantes() {
-        if (integrantes == null) {
-            integrantes = new ArrayList<>();
-        }
-        return integrantes;
-    }
-
-    public void setIntegrantes(List<Integrante> integrantes) {
-        this.integrantes = integrantes;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Usuario usuario = (Usuario) o;
-        return Objects.equals(nombre, usuario.nombre)
-                && Objects.equals(email, usuario.email)
-                && Objects.equals(contrasenia, usuario.contrasenia);
+        Usuario entidad = (Usuario) o;
+        return Objects.equals(nombre, entidad.nombre)
+                && Objects.equals(email, entidad.email)
+                && Objects.equals(contrasenia, entidad.contrasenia);
     }
 
     @Override
@@ -117,8 +66,6 @@ public class Usuario {
                 "nombre='" + nombre + '\'' +
                 ", email='" + email + '\'' +
                 ", contrasenia='" + contrasenia + '\'' +
-                ", proyectos=" + proyectos +
-                ", integrantes=" + integrantes +
                 '}';
     }
 }
