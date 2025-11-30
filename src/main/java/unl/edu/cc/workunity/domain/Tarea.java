@@ -146,7 +146,7 @@ public class Tarea {
                 ", estado=" + estado +
                 ", fechaAsignacion=" + fechaAsignacion +
                 ", fechaLimite=" + fechaLimite +
-                ", integranteAsignado=" + integranteAsignado.getUsuario().getNombre() +
+                ", integranteAsignado=" + integranteAsignado.getEntidad().getNombre() +
                 ", proyecto=" + proyecto.getNombre() +
                 ", comentarios=" + getComentarios().size() +
                 ", archivo=" + archivo +

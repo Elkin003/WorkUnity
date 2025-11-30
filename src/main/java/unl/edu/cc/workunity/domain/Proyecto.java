@@ -15,11 +15,11 @@ public class Proyecto {
     private LocalDate fechaCreacion;
     private LocalDate fechaLimite;
     //Relaciones
-    private Usuario creador;
+    private Entidad creador;
     private List<Integrante> miembros;
     private List<Tarea> tareas;
 
-    public Proyecto(String nombre, String descripcion, LocalDate fechaLimite, Usuario creador) {
+    public Proyecto(String nombre, String descripcion, LocalDate fechaLimite, Entidad creador) {
         if (fechaLimite.isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("La fecha límite no puede ser anterior a la fecha de hoy.");
         }
@@ -62,11 +62,11 @@ public class Proyecto {
         this.fechaLimite = fechaLimite;
     }
 
-    public Usuario getCreador() {
+    public Entidad getCreador() {
         return creador;
     }
 
-    public void setCreador(Usuario creador) {
+    public void setCreador(Entidad creador) {
         this.creador = creador;
     }
 
