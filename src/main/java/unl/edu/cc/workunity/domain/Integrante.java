@@ -49,6 +49,13 @@ public class Integrante {
         }
     }
 
+    public Tarea crearTarea(String titulo, String descripcion, LocalDate fechaLimite) {
+        validarLider();
+        Tarea tarea = new Tarea(titulo, descripcion, fechaLimite, proyecto);
+        proyecto.getTareas().add(tarea);
+        return tarea;
+    }
+
     public void asignarTarea(Tarea tarea, Integrante integranteAsignado) {
         validarLider();
         if (!proyecto.getMiembros().contains(integranteAsignado)) {

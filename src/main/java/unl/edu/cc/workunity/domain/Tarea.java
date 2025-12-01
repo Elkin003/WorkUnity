@@ -28,6 +28,9 @@ public class Tarea {
     private ArchivoAdjunto archivo;
 
     public Tarea(String titulo, String descripcion, LocalDate fechaLimite, Proyecto proyecto) {
+        if (fechaLimite.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("La fecha límite no puede ser anterior a la fecha de hoy.");
+        }
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.entregada = false;
