@@ -21,7 +21,7 @@ public class Proyecto {
 
     public Proyecto(String nombre, String descripcion, LocalDate fechaLimite, Entidad creador) {
         if (fechaLimite.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("La fecha límite no puede ser anterior a la fecha de hoy.");
+            throw new IllegalArgumentException("La fecha limite deber ser hoy o una fecha futura.. ");
         }
         this.nombre = nombre;
         this.descripcion = descripcion;

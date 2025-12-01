@@ -27,7 +27,7 @@ public class Integrante {
 
     private void validarLider() {
         if (rol != Rol.LIDER) {
-            throw new UnauthorizedAccessException("No tiene permiso para modificar");
+            throw new UnauthorizedAccessException("No tiene autorizacion para modificar ");
         }
     }
 
@@ -45,7 +45,7 @@ public class Integrante {
             proyecto.getMiembros().add(integranteNuevo); // Agrega un integrante al proyecto
             entidad.getIntegrantes().add(integranteNuevo);
         } else {
-            throw new ExistingIntegrantException("El integrante ya pertenece al proyecto.");
+            throw new ExistingIntegrantException("El integrante ya pertenece al proyecto ");
         }
     }
 
@@ -59,7 +59,7 @@ public class Integrante {
     public void asignarTarea(Tarea tarea, Integrante integranteAsignado) {
         validarLider();
         if (!proyecto.getMiembros().contains(integranteAsignado)) {
-            throw new UnauthorizedAccessException("El integrante no pertenece al Proyecto");
+            throw new UnauthorizedAccessException("El integrante no pertenece al proyecto ");
         }
         tarea.setIntegranteAsignado(integranteAsignado);
         integranteAsignado.getTareas();
